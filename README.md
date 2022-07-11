@@ -1,5 +1,5 @@
 # sandia-iso15118
-This project is a research collaboration between UNM, SNL and few other organizations. Goal of the project is to:
+This project is a research collaboration between UNM, SNL and few other organizations. The goals of the project are to:
 - virtualize the EV charging PKI environment using phenix-minimega
 - answer some research questions:
   1. What’s the scalability of certificate generation/distribution?
