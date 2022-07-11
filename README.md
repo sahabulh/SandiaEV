@@ -22,6 +22,7 @@ Instruction is given in the repository [readme file](https://github.com/sandia-m
 1. Install [Docker](https://docs.docker.com/engine/install/ubuntu/) and [Docker Compose](https://docs.docker.com/compose/install/).
 2. Clone the [phenix git repository](https://github.com/sandia-minimega/phenix.git).
 3. From a terminal, change into the phenix/docker directory.
-4. Run 'docker-compose build' (this can take a while depending on your system).
-5. Run 'docker-compose up -d phenix'.
-6. Browse to http://localhost:3000 to access the phenix UI.
+4. Run `sudo docker-compose build` (this can take a while depending on your system).
+5. Run `sudo mkdir /phenix` to create the phenix installation folder.
+6. Run `sudo docker-compose up -d phenix`.
+7. Browse to http://localhost:3000 to access the phenix UI.
