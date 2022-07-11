@@ -18,4 +18,10 @@ This project is a research collaboration between UNM, SNL and few other organiza
 ### ISO 15118
 Clear instruction is given in the repository readme file. Please follow [this](https://github.com/SwitchEV/iso15118#readme).
 ### phenix
-Instruction is given in the repository [readme file](https://github.com/sandia-minimega/phenix) and also in the [project website](https://phenix.sceptre.dev/). But a more straight forward instructionis given below.
+Instruction is given in the repository [readme file](https://github.com/sandia-minimega/phenix) and also in the [project website](https://phenix.sceptre.dev/). But a more straight forward instruction is given below:
+1. Install [Docker](https://docs.docker.com/engine/install/ubuntu/) and [Docker Compose](https://docs.docker.com/compose/install/).
+2. Clone the [phenix git repository](https://github.com/sandia-minimega/phenix.git).
+3. From a terminal, change into the phenix/docker directory.
+4. Run 'docker-compose build' (this can take a while depending on your system).
+5. Run 'docker-compose up -d phenix'.
+6. Browse to http://localhost:3000 to access the phenix UI.
