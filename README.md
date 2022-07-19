@@ -32,3 +32,11 @@ To restart phenix:
 2. Run `sudo docker-compose down`.
 3. Run `sudo rm -rf /etc/phenix`.
 4. Run `sudo docker-compose up -d phenix`.
+
+## Building an image using phenix
+1. Add an alias to the system for phenix by running `alias phenix="docker exec -it phenix phenix"`.
+2. Export existing image config from phenix by running `phenix config get image/miniccc > /phenix/switchev-iso15118.yml`.
+3. Add necessary packages and scripts to the newly exported image config file.
+4. Change the name field in the image config file by giving it a unique name.
+5. Import the image config file by running `phenix config create /phenix/switchev-iso15118.yml`.
+6. Finally, build the image by running `phenix image build -x -c -o /phenix/vmdb switchev-iso15118`.
