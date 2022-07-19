@@ -26,3 +26,9 @@ Instruction is given in the repository [readme file](https://github.com/sandia-m
 5. Run `sudo mkdir /phenix` to create the phenix installation folder.
 6. Run `sudo docker-compose up -d phenix`.
 7. Browse to http://localhost:3000 to access the phenix UI.
+
+To restart phenix:
+1. From a terminal, change into the phenix/docker directory.
+2. Run `sudo docker-compose down`.
+3. Run `sudo rm -rf /etc/phenix`.
+4. Run `sudo docker-compose up -d phenix`.
