@@ -1,4 +1,4 @@
-# sandia-iso15118
+# SandiaEV
 ## Introduction
 This project is a research collaboration between UNM, SNL and few other organizations. The goals of the project are to:
 - virtualize the EV charging PKI environment using phenix-minimega
