@@ -59,5 +59,5 @@ If you want to ping the VMs from the host machine or vice versa, it will not wor
 4. Check the vlan name from the phenix experiment panel (not the experiment tab). It should be under the network column. Ignore the number in the parenthesis. For exmaple, if the entry under the network tab is "lan (101)", the vlan name is "lan".
 5. Check the bridge name using `ifconfig` in the host machine. It should be "phenix".
 6. Check the ipv4 subnet of the VMs. Choose an ip address within the subnet excluding the already used ones. It will be used as the ip address for the tap interface. For example, if the ip of the VMs are 10.1.2.101-110, you can choose 10.1.2.1/24 or 10.1.2.254/24 as the ip address for the tap.
-7. Execute this to create the tap: `minimega -e tap create "vlan name" bridge "bridge name" ip "ip address" "tap name"`. Choose a tap name of your choice.
+7. Execute this to create the tap: `minimega -e tap create "vlan name" bridge "bridge name" ip "ip address" "tap name"`. Choose a tap name of your choice. For example, the complete command can be: `minimega -e tap create lan bridge phenix ip 10.1.2.254/24 nat0`
 8. The VMs and the host will be able to communicate with each other now. Test by pinging.
