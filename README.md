@@ -50,3 +50,14 @@ To restart phenix:
 4. Run the experiment by clicking the red 'stopped' button. If everything is okay, the experiment will run and the button will turn to a green 'started' button. Stopping the experiment follows the similar process.
 5. Click on the name of the experiment to open the experiment panel.
 6. Click on the screenshot of a VM to access it. A new tab will be created for each VM.
+
+## Accessing the VMs from the host machine
+If you want to ping the VMs from the host machine or vice versa, it will not work. The VMs do get virtual interfaces created but they are isolated on the OVS bridge they're connected to. The easiest way to access the VMs is to "tap" the bridge with an addressable interface on the host. Here are the steps:
+1. Clone the [minimega](https://github.com/sandia-minimega/minimega) git repository.
+2. Open the terminal. Enble root user by running `sudo su`.
+3. Add the minimega bin folder to the PATH variable.
+4. Check the vlan name from the phenix experiment panel (not the experiment tab). It should be under the network column. Ignore the number in the parenthesis. For exmaple, if the entry under the network tab is "lan (101)", the vlan name is "lan".
+5. Check the bridge name using `ifconfig` in the host machine. It should be "phenix".
+6. Check the ipv4 subnet of the VMs. Choose an ip address within the subnet excluding the already used ones. It will be used as the ip address for the tap interface. For example, if the ip of the VMs are 10.1.2.101-110, you can choose 10.1.2.1/24 or 10.1.2.254/24 as the ip address for the tap.
+7. Execute this to create the tap: `minimega -e tap create "vlan name" bridge "bridge name" ip "ip address" "tap name"`. Choose a tap name of your choice.
+8. The VMs and the host will be able to communicate with each other now. Test by pinging.
