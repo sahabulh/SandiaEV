@@ -39,6 +39,14 @@ To restart phenix:
 3. Export existing image config from phenix by running `phenix config get image/miniccc > /phenix/switchev-iso15118.yml`. Here 'switchev-iso15118.yml' is the name of the downloaded image config file.
 4. Add necessary packages and scripts to the newly exported image config file.
 5. Change the name field in the image config file by giving it a unique name.
-6. Remove the overlays field from the image config file. See the 'Image Config' folder for a prepared file with all the necessary packages.
+6. Remove the overlays field from the image config file. See the [Image Config](https://github.com/sahabulh/SandiaEV/tree/main/Image%20Config) folder for a prepared file with all the necessary packages.
 7. Import the image config file by running `phenix config create /phenix/switchev-iso15118.yml`.
 8. Finally, build the image by running `phenix image build -x -c -o /phenix/vmdb switchev-iso15118`.
+
+## Running VMs
+1. Browse to http://localhost:3000 to access the phenix UI.
+2. Create or import a network topology using the [Configs](http://localhost:3000/configs) tab. Visit the [phenix website](https://phenix.sceptre.dev/configuration/#topology) to learn how to create topologies. Check the [Topology](https://github.com/sahabulh/SandiaEV/tree/main/Topology) folder for some prepared examples.
+3. Go to the [Experiments](http://localhost:3000/experiments) tab to create a new experiment. Select the correct topology.
+4. Run the experiment by clicking the red 'stopped' button. If everything is okay, the experiment will run and the button will turn to a green 'started' button. Stopping the experiment follows the similar process.
+5. Click on the name of the experiment to open the experiment panel.
+6. Click on the screenshot of a VM to access it. A new tab will be created for each VM.
