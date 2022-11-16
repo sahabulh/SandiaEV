@@ -1,0 +1,81 @@
+apiVersion: phenix.sandia.gov/v1
+kind: Image
+metadata:
+    name: switchev
+    created: "2022-08-18T11:34:18-06:00"
+    updated: "2022-08-22T12:25:27-06:00"
+spec:
+    compress: false
+    deb_append: ' --components=main,restricted,universe,multiverse'
+    format: qcow2
+    mirror: http://us.archive.ubuntu.com/ubuntu/
+    packages:
+        - initramfs-tools
+        - net-tools
+        - isc-dhcp-client
+        - init
+        - iputils-ping
+        - vim
+        - less
+        - netbase
+        - curl
+        - ifupdown
+        - dbus
+        - linux-image-generic
+        - linux-headers-generic
+        - openssh-server
+        - openssh-client
+        - python3
+        - python3-pip
+        - python3-venv
+        - tree
+        - git
+        - default-jre
+    ramdisk: false
+    release: jammy
+    script_order:
+        - INSTALL_SWITCHEV
+        - POSTBUILD_APT_CLEANUP
+        - POSTBUILD_NO_ROOT_PASSWD
+        - POSTBUILD_PHENIX_HOSTNAME
+        - POSTBUILD_PHENIX_BASE
+    scripts:
+        INSTALL_SWITCHEV: |
+            git clone -c http.sslVerify=false https://github.com/sahabulh/switchev_iso15118.git
+            cd ./switchev_iso15118
+
+            python3 -m pip install "poetry==1.1.11" "mypy==0.930"
+            sed -i 's/secc/secc/g' pyproject.toml
+            poetry config virtualenvs.create false
+            poetry install --no-interaction --no-ansi
+
+            poetry run black --check --diff --line-length=88 iso15118 tests
+            poetry run flake8 --config .flake8 iso15118 tests
+            poetry run pytest -vv --cov-config .coveragerc --cov-report term-missing  --durations=3 --cov=.
+            poetry build
+
+            python3 -m venv /venv
+            /venv/bin/python3 -m pip install aiofile
+            /venv/bin/python3 -m pip install dist/*.whl
+        POSTBUILD_APT_CLEANUP: |
+            apt clean || apt-get clean || echo "unable to clean apt cache"
+        POSTBUILD_NO_ROOT_PASSWD: |
+            sed -i 's/nullok_secure/nullok/' /etc/pam.d/common-auth
+            passwd -d root
+        POSTBUILD_PHENIX_BASE: "cat > /etc/systemd/system/phenix.service <<EOF\n[Unit]\nDescription=phenix startup service\nAfter=network.target systemd-hostnamed.service\n[Service]\nEnvironment=LD_LIBRARY_PATH=/usr/local/lib\nExecStart=/usr/local/bin/phenix-start.sh\nRemainAfterExit=true\nStandardOutput=journal\nType=oneshot\n[Install]\nWantedBy=multi-user.target\nEOF\nmkdir -p /etc/systemd/system/multi-user.target.wants\nln -s /etc/systemd/system/phenix.service /etc/systemd/system/multi-user.target.wants/phenix.service\nmkdir -p /usr/local/bin\ncat > /usr/local/bin/phenix-start.sh <<EOF\n#!/bin/bash\nfor file in /etc/phenix/startup/*; do\n  echo \\$file\n  bash \\$file\ndone\nEOF\nchmod +x /usr/local/bin/phenix-start.sh\nmkdir -p /etc/phenix/startup\ncd /venv/lib/python3.10/site-packages/iso15118/shared/pki/\n./create_certs.sh -v iso-2\n./create_certs.sh -v iso-20\nmkdir -p ~/.ssh\nmv /switchev_iso15118/common_keys/id_rsa /root/.ssh/\nmv /switchev_iso15118/common_keys/id_rsa.pub /root/.ssh/\ncat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys\nchmod 700 ~/.ssh\nchmod 600 ~/.ssh/id_rsa\nchmod 600 ~/.ssh/id_rsa.pub\nchmod 600 ~/.ssh/authorized_keys\nrm -fr /switchev_iso15118 \n"
+        POSTBUILD_PHENIX_HOSTNAME: |
+            echo "phenix" > /etc/hostname
+            sed -i 's/127.0.1.1 .*/127.0.1.1 phenix/' /etc/hosts
+            cat > /etc/motd <<EOF
+
+            ██████╗ ██╗  ██╗███████╗███╗  ██╗██╗██╗  ██╗
+            ██╔══██╗██║  ██║██╔════╝████╗ ██║██║╚██╗██╔╝
+            ██████╔╝███████║█████╗  ██╔██╗██║██║ ╚███╔╝
+            ██╔═══╝ ██╔══██║██╔══╝  ██║╚████║██║ ██╔██╗
+            ██║     ██║  ██║███████╗██║ ╚███║██║██╔╝╚██╗
+            ╚═╝     ╚═╝  ╚═╝╚══════╝╚═╝  ╚══╝╚═╝╚═╝  ╚═╝
+
+            EOF
+            echo "\nBuilt with phenix image on $(date)\n\n" >> /etc/motd
+    size: 10G
+    variant: minbase

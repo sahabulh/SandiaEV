@@ -1,0 +1,280 @@
+apiVersion: phenix.sandia.gov/v1
+kind: Topology
+metadata:
+    name: PnC_PKI
+    created: "2022-09-01T12:07:10-06:00"
+    updated: "2022-09-01T12:10:57-06:00"
+spec:
+    nodes:
+        - general:
+            hostname: V2GRootCA
+            snapshot: true
+          hardware:
+            drives:
+                - image: switchev.qc2
+            os_type: linux
+          network:
+            interfaces:
+                - address: 10.1.2.101
+                  gateway: 10.1.2.254
+                  mask: 24
+                  name: IF0
+                  proto: static
+                  type: ethernet
+                  vlan: lan
+          type: VirtualMachine
+        - general:
+            hostname: CPOSubCA1
+            snapshot: true
+          hardware:
+            drives:
+                - image: switchev.qc2
+            os_type: linux
+          network:
+            interfaces:
+                - address: 10.1.2.102
+                  gateway: 10.1.2.254
+                  mask: 24
+                  name: IF0
+                  proto: static
+                  type: ethernet
+                  vlan: lan
+          type: VirtualMachine
+        - general:
+            hostname: CPOSubCA2
+            snapshot: true
+          hardware:
+            drives:
+                - image: switchev.qc2
+            os_type: linux
+          network:
+            interfaces:
+                - address: 10.1.2.103
+                  gateway: 10.1.2.254
+                  mask: 24
+                  name: IF0
+                  proto: static
+                  type: ethernet
+                  vlan: lan
+          type: VirtualMachine
+        - general:
+            hostname: SECC1
+            snapshot: true
+          hardware:
+            drives:
+                - image: switchev.qc2
+            os_type: linux
+          network:
+            interfaces:
+                - address: 10.1.2.104
+                  gateway: 10.1.2.254
+                  mask: 24
+                  name: IF0
+                  proto: static
+                  type: ethernet
+                  vlan: lan
+          type: VirtualMachine
+        - general:
+            hostname: MORootCA
+            snapshot: true
+          hardware:
+            drives:
+                - image: switchev.qc2
+            os_type: linux
+          network:
+            interfaces:
+                - address: 10.1.2.105
+                  gateway: 10.1.2.254
+                  mask: 24
+                  name: IF0
+                  proto: static
+                  type: ethernet
+                  vlan: lan
+          type: VirtualMachine
+        - general:
+            hostname: MOSubCA1
+            snapshot: true
+          hardware:
+            drives:
+                - image: switchev.qc2
+            os_type: linux
+          network:
+            interfaces:
+                - address: 10.1.2.106
+                  gateway: 10.1.2.254
+                  mask: 24
+                  name: IF0
+                  proto: static
+                  type: ethernet
+                  vlan: lan
+          type: VirtualMachine
+        - general:
+            hostname: MOSubCA2
+            snapshot: true
+          hardware:
+            drives:
+                - image: switchev.qc2
+            os_type: linux
+          network:
+            interfaces:
+                - address: 10.1.2.107
+                  gateway: 10.1.2.254
+                  mask: 24
+                  name: IF0
+                  proto: static
+                  type: ethernet
+                  vlan: lan
+          type: VirtualMachine
+        - general:
+            hostname: EVCC1
+            snapshot: true
+          hardware:
+            drives:
+                - image: switchev.qc2
+            os_type: linux
+          network:
+            interfaces:
+                - address: 10.1.2.108
+                  gateway: 10.1.2.254
+                  mask: 24
+                  name: IF0
+                  proto: static
+                  type: ethernet
+                  vlan: lan
+          type: VirtualMachine
+        - general:
+            hostname: OEMRootCA
+            snapshot: true
+          hardware:
+            drives:
+                - image: switchev.qc2
+            os_type: linux
+          network:
+            interfaces:
+                - address: 10.1.2.109
+                  gateway: 10.1.2.254
+                  mask: 24
+                  name: IF0
+                  proto: static
+                  type: ethernet
+                  vlan: lan
+          type: VirtualMachine
+        - general:
+            hostname: OEMSubCA1
+            snapshot: true
+          hardware:
+            drives:
+                - image: switchev.qc2
+            os_type: linux
+          network:
+            interfaces:
+                - address: 10.1.2.110
+                  gateway: 10.1.2.254
+                  mask: 24
+                  name: IF0
+                  proto: static
+                  type: ethernet
+                  vlan: lan
+          type: VirtualMachine
+        - general:
+            hostname: OEMSubCA2
+            snapshot: true
+          hardware:
+            drives:
+                - image: switchev.qc2
+            os_type: linux
+          network:
+            interfaces:
+                - address: 10.1.2.111
+                  gateway: 10.1.2.254
+                  mask: 24
+                  name: IF0
+                  proto: static
+                  type: ethernet
+                  vlan: lan
+          type: VirtualMachine
+        - general:
+            hostname: CPSSubCA1
+            snapshot: true
+          hardware:
+            drives:
+                - image: switchev.qc2
+            os_type: linux
+          network:
+            interfaces:
+                - address: 10.1.2.112
+                  gateway: 10.1.2.254
+                  mask: 24
+                  name: IF0
+                  proto: static
+                  type: ethernet
+                  vlan: lan
+          type: VirtualMachine
+        - general:
+            hostname: CPSSubCA2
+            snapshot: true
+          hardware:
+            drives:
+                - image: switchev.qc2
+            os_type: linux
+          network:
+            interfaces:
+                - address: 10.1.2.113
+                  gateway: 10.1.2.254
+                  mask: 24
+                  name: IF0
+                  proto: static
+                  type: ethernet
+                  vlan: lan
+          type: VirtualMachine
+        - general:
+            hostname: CPSLeaf
+            snapshot: true
+          hardware:
+            drives:
+                - image: switchev.qc2
+            os_type: linux
+          network:
+            interfaces:
+                - address: 10.1.2.114
+                  gateway: 10.1.2.254
+                  mask: 24
+                  name: IF0
+                  proto: static
+                  type: ethernet
+                  vlan: lan
+          type: VirtualMachine
+        - general:
+            hostname: SECC2
+            snapshot: true
+          hardware:
+            drives:
+                - image: switchev.qc2
+            os_type: linux
+          network:
+            interfaces:
+                - address: 10.1.2.115
+                  gateway: 10.1.2.254
+                  mask: 24
+                  name: IF0
+                  proto: static
+                  type: ethernet
+                  vlan: lan
+          type: VirtualMachine
+        - general:
+            hostname: EVCC2
+            snapshot: true
+          hardware:
+            drives:
+                - image: switchev.qc2
+            os_type: linux
+          network:
+            interfaces:
+                - address: 10.1.2.116
+                  gateway: 10.1.2.254
+                  mask: 24
+                  name: IF0
+                  proto: static
+                  type: ethernet
+                  vlan: lan
+          type: VirtualMachine
