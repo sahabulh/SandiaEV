@@ -61,3 +61,25 @@ If you want to ping the VMs from the host machine or vice versa, it will not wor
 6. Check the ipv4 subnet of the VMs. Choose an ip address within the subnet excluding the already used ones. It will be used as the ip address for the tap interface. For example, if the ip of the VMs are 10.1.2.101-110, you can choose 10.1.2.1/24 or 10.1.2.254/24 as the ip address for the tap.
 7. Execute this to create the tap: `minimega -e tap create "vlan name" bridge "bridge name" ip "ip address" "tap name"`. Choose a tap name of your choice. For example, the complete command can be: `minimega -e tap create lan bridge phenix ip 10.1.2.254/24 nat0`
 8. The VMs and the host will be able to communicate with each other now. Test by pinging.
+
+## Accesing the internet from the VMs
+By default, the VMs will not be able to access the internet. Test by pinging www.google.com. To enable access to the internet, on the host side, we will have to enable ip forwarding and configure the iptable. On the VM side, we need to add the host ip as the default gateway and configure the DNS. The steps are as follows:
+### Configuring the host machine
+1. Create a tap interface following the instruction in the previous section.
+2. Execute this to enable ip forwarding in the host machine: `sysctl -w net.ipv4.ip_forward=1`.
+3. Execute the following 5 commands in order. You may need to change `eth0` to match the interface on the host machine with Internet access. Also, You may need to change `nat0` to match the name of the tap interface you have just created.</br>
+   `iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE`</br>
+   `iptables -A INPUT -i nat0 -j ACCEPT`</br>
+   `iptables -A INPUT -i eth0 -m state --state ESTABLISHED,RELATED -j ACCEPT`</br>
+   `iptables -A OUTPUT -j ACCEPT`</br>
+   `iptables --policy FORWARD ACCEPT`
+### Configuring the virtual machines
+1. Login as root.
+2. Check if the defalut gateway is set to the tap interface ip address of the host machine.
+3. If not, use `ip route delete default` to delete the wrong default gateway.
+4. Now execute `ip route add default via 10.1.2.254` to set the correct default gateway. Here, 10.1.2.254 is the tap interface ip address of the host machine.
+5. Check if you can ping google.
+6. If not, edit `/etc/resolv.conf` by adding the address of google public DNS (8.8.8.8 and/or 8.8.4.4) or any other DNS. The entry should look like this:</br>
+   `nameserver 8.8.8.8`</br>
+   `nameserver 8.8.4.4`
+7. Test by pinging google.
