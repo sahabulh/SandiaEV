@@ -36,9 +36,9 @@ To restart phenix:
 ## Building an image using phenix
 1. Enble root user by running `sudo su`.
 2. Add an alias to the system for phenix by running `alias phenix="docker exec -it phenix phenix"`.
-3. Export existing image config from phenix by running `phenix config get image/miniccc > /phenix/switchev-iso15118.yml`.
+3. Export existing image config from phenix by running `phenix config get image/miniccc > /phenix/switchev-iso15118.yml`. Here 'switchev-iso15118.yml' is the name of the downloaded image config file.
 4. Add necessary packages and scripts to the newly exported image config file.
 5. Change the name field in the image config file by giving it a unique name.
-6. Remove the overlays field from the image config file.
+6. Remove the overlays field from the image config file. See the 'Image Config' folder for a prepared file with all the necessary packages.
 7. Import the image config file by running `phenix config create /phenix/switchev-iso15118.yml`.
 8. Finally, build the image by running `phenix image build -x -c -o /phenix/vmdb switchev-iso15118`.
